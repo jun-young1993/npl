@@ -4,3 +4,5 @@
 ```shell
 npm i -g npl
 ```
+
+# nf init

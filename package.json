@@ -1,10 +1,22 @@
 {
-  "name": "npl",
+  "name": "npm-fuse",
   "version": "1.0.0",
   "description": "npm library  publish manager",
-  "main": "index.js",
+  "private": false,
+  "engines": {
+    "node": ">=20.11.0",
+    "npm": ">=10.2.4"
+  },
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "npm-fuse": "./dist/index.js",
+    "nf": "./dist/index.js"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc",
+    "start": "node .index.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +33,12 @@
   "bugs": {
     "url": "https://github.com/jun-young1993/npl/issues"
   },
-  "homepage": "https://github.com/jun-young1993/npl#readme"
+  "homepage": "https://github.com/jun-young1993/npl#readme",
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "commander": "^12.0.0"
+  }
 }
