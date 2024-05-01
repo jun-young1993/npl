@@ -1,0 +1,25 @@
+{
+  "name": "npl",
+  "version": "1.0.0",
+  "description": "npm library  publish manager",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jun-young1993/npl.git"
+  },
+  "keywords": [
+    "npm",
+    "publish",
+    "library",
+    "manager"
+  ],
+  "author": "jun-young1993",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jun-young1993/npl/issues"
+  },
+  "homepage": "https://github.com/jun-young1993/npl#readme"
+}
