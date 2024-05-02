@@ -1,4 +1,4 @@
-import Console from "../lib/consol-color";
+import Console from "../lib/consoleColor/consol-color";
 import fs from 'fs';
 const Init = async () => {
     const runPath = process.cwd();
