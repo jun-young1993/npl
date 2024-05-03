@@ -6,4 +6,17 @@ const readlineInterface = readline.createInterface({
 	output: stdout
 });
 
+
+export const questionSync = (query: string, defaultValue?: string): Promise<string> => {
+	return new Promise((resolve, reject) => {
+		try{
+			readlineInterface.question(query, (answer) => {
+				resolve(answer === '' ? (defaultValue ?? '') : answer);
+			});
+		}catch(e){
+			reject(e);
+		}
+	})
+	
+}
 export default readlineInterface;

@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jun-young1993/npl.git"
+    "url": "git+https://github.com/jun-young1993/npm-fuse.git"
   },
   "keywords": [
     "npm",
@@ -31,9 +31,9 @@
   "author": "jun-young1993",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jun-young1993/npl/issues"
+    "url": "https://github.com/jun-young1993/npm-fuse/issues"
   },
-  "homepage": "https://github.com/jun-young1993/npl#readme",
+  "homepage": "https://github.com/jun-young1993/npm-fuse#readme",
   "devDependencies": {
     "@types/node": "^20.12.7",
     "typescript": "^5.4.5"
