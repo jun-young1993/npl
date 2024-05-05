@@ -34,10 +34,29 @@ const Console = {
             console.log(fgBlue + message + reset);
         });
     },
+    warn: (...args: string[]) => {
+        args.forEach((message) => {
+            console.log(fgYellow + message + reset);
+        });
+    },
     error: (...args: string[]) => {
         args.forEach((message) => {
             console.log(fgRed + message + reset);
         });
-    }
+    },
+    keyAndValue: (...args: string[]) => {
+        console.log(fgCyan + args[0]+': '+fgMagenta+args[1] + reset);
+    },
+    key: (...args: string[]) => {
+        args.forEach((message) => {
+            console.log(fgCyan + message + reset);
+        });
+    },
+    value: (...args: string[]) => {
+        args.forEach((message) => {
+            console.log(fgMagenta + message + reset);
+        });
+    },
+
 }
 export default Console;

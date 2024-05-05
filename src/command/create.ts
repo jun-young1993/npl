@@ -1,48 +1,37 @@
-import { spawnSync, execSync } from "child_process";
-import readlineInterface, { questionSync } from "../lib/cli/readlineInterface";
+import { questionSync } from "../lib/cli/readlineInterface";
 import Console from "../lib/consoleColor/consol-color";
-import { existsSync, mkdirSync } from "fs";
-import { APP_NAME } from "../config";
+import {copyFileSync, existsSync, mkdirSync, rmSync, symlinkSync, writeFileSync} from "fs";
+import {
+	DefaultNpmIgnore,
+	JsonConfig,
+	MODULE_FOLDER_NAME,
+	PackageJsonValues,
+	TsconfigBaseJsonValue, TsconfigCjsJsonValue,
+	TsconfigJsonValue
+} from "../app.config";
+import * as os from "os";
+import {exec, execSync} from "child_process";
+
 const Create = async () => {
-	console.log(process.pid);
-	console.log(process.platform);
-	console.log(process.title)
-	console.log(process.execPath);
-	Console.info("++++++++++++++++++++++");
-	Console.info("+[CREATE NPM PROJECT]+");
-	Console.info("++++++++++++++++++++++");
 
-	const packageJson = {
-		"name": "no name",
-		"version": "1.0.0",
-		"engines": {},
-		"files": [
-			"dist"
-		],
-		"keywords": [],
-		"author": "",
-		"license": "",
-		"bugs": {
-			"url": ""
-		},
-		"devDependencies": {
-			"@types/node": "^20.12.7",
-			"typescript": "^5.4.5"
-		}
-	}
+	Console.info("++++++++++++++++++++");
+	Console.info("[CREATE NPM PROJECT]");
+	Console.info("++++++++++++++++++++");
 
-	const projectName = await questionSync(`project name(${packageJson.name}): `,packageJson.name);
-	packageJson.name = projectName;
+	const projectName = await questionSync(`project name(${PackageJsonValues.read("name")}): `,PackageJsonValues.read("name"));
+	PackageJsonValues.update("name",projectName);
 
-	const projectVersion = await questionSync(`project version(${packageJson.version}): `,packageJson.version);
-	packageJson.version = projectVersion;
 
-	const projectFullPath = `${process.env.TEMP}/${APP_NAME}/${projectName}`;
-	console.log(process.env)
-	const existsProjectFoler = existsSync(projectFullPath);
-	if(existsProjectFoler){
+	const projectVersion = await questionSync(`project version(${PackageJsonValues.read("version")}): `,PackageJsonValues.read("version"));
+	PackageJsonValues.update("version",projectVersion)
+
+	const projectFullPath = `${JsonConfig.read('path',os.homedir())}/${projectName}`;
+
+	const existsProjectFolder = existsSync(projectFullPath);
+	if(existsProjectFolder){
 		Console.error(`[Exists Project Folder]: ${projectFullPath}`);
-		process.exit(1);
+		process.exit(0);
+
 	}
 	
 	const createProjectFolder = mkdirSync(projectFullPath,{
@@ -54,18 +43,71 @@ const Create = async () => {
 	}
 	Console.info(`[Create Project Folder] ${projectFullPath}`);
 
-	execSync("npm link ")
+	const moduleSymLinkFolderPath = `${process.cwd()}/${MODULE_FOLDER_NAME}`;
+	mkdirSync(moduleSymLinkFolderPath,{
+		recursive: true
+	});
+	const moduleSymLinkProjectPath = `${moduleSymLinkFolderPath}/${projectName}`;
 
-	console.log(createProjectFolder);
-	console.log(process.pid);
-	console.log(process.platform);
-	const ls = execSync("ls -al").toString();
+	symlinkSync(projectFullPath,moduleSymLinkProjectPath,"dir");
+	Console.info(`[Create Project Symlink] ${moduleSymLinkProjectPath}`);
+
+	const projectPackageJsonPath = `${moduleSymLinkProjectPath}/package.json`;
+	copyFileSync(PackageJsonValues.getPath(),projectPackageJsonPath);
+	PackageJsonValues.deleteFile();
+	Console.info(`[Create Project Package Json] ${projectPackageJsonPath}`);
+
+	const projectTsconfig = `${moduleSymLinkProjectPath}/tsconfig.json`;
+	copyFileSync(TsconfigJsonValue.getPath(),projectTsconfig);
+	TsconfigJsonValue.deleteFile();
+	Console.info(`[Create Project tsconfig Json] ${projectTsconfig}`);
+
+	const projectTsconfigBase = `${moduleSymLinkProjectPath}/tsconfig-base.json`;
+	copyFileSync(TsconfigBaseJsonValue.getPath(),projectTsconfigBase);
+	TsconfigBaseJsonValue.deleteFile();
+	Console.info(`[Create Project tsconfig base Json] ${projectTsconfigBase}`);
+
+	const projectTsconfigCjs = `${moduleSymLinkProjectPath}/tsconfig-cjs.json`;
+	copyFileSync(TsconfigCjsJsonValue.getPath(),projectTsconfigCjs);
+	TsconfigCjsJsonValue.deleteFile();
+	Console.info(`[Create Project tsconfig Json] ${projectTsconfigCjs}`);
+
+	const projectNpmIgnore = `${moduleSymLinkProjectPath}/.npmignore`;
+	writeFileSync(projectNpmIgnore,DefaultNpmIgnore);
+	Console.info(`[Create Project npmignore] ${projectNpmIgnore}`);
+
+	const projectSrcFolder = `${moduleSymLinkProjectPath}/src`;
+	mkdirSync(projectSrcFolder,{
+		recursive: true
+	});
+	Console.info(`[Create Project src Folder] ${projectSrcFolder}`);
+
+	const projectBaseIndex = `${projectSrcFolder}/index.ts`;
+	writeFileSync(projectBaseIndex,`
+	function Base(){
+		console.log('Base Function');
+	}
 	
-	console.log('ls',ls);
+	export {
+		Base
+	}
+	`,)
+	Console.info(`[Create Project src index] ${projectBaseIndex}`);
 
+	Console.info(`[npm install && npm run build && npm link]...`);
+	const npmInstallResult = execSync("npm install",{
+		cwd: moduleSymLinkProjectPath
+	})
+	Console.info(`[Result Npm Install]...`,npmInstallResult.toString());
+	const npmRunBuildResult = execSync("npm run build",{
+		cwd: moduleSymLinkProjectPath
+	})
+	Console.info(`[Result Build]...`,npmRunBuildResult.toString());
+	const npmLinkResult = execSync("npm link",{
+		cwd: moduleSymLinkProjectPath
+	})
+	Console.info(`[Result Link]...`,npmLinkResult.toString());
 
-
-	
 
 }
 
