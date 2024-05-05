@@ -1,5 +1,5 @@
 import fs, {rmSync} from 'fs';
-
+import path from 'path';
 interface Data {
     [key: string]: any;
 }
@@ -39,6 +39,10 @@ class JSONFileManager {
         }
     }
 
+    has(key: string){
+        return this.read(key) === undefined ? false : true;
+    }
+
     read(key: string, defaultValue?: string): string | undefined{
         try {
             const data = fs.readFileSync(this.filePath, 'utf8');
@@ -73,8 +77,10 @@ class JSONFileManager {
 
     reset(defaultJson?: Data): void {
         try {
+            fs.mkdirSync(path.dirname(this.filePath),{
+                recursive: true
+            })
             fs.writeFileSync(this.filePath, JSON.stringify(defaultJson ?? {}, null, 2));
-            console.log('JSON file has been reset successfully.');
         } catch (error) {
             console.error(`Error resetting JSON file: ${error}`);
         }

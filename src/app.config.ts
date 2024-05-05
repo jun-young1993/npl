@@ -180,7 +180,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 `;
-export const PackageJsonValues = new JSONFileManager(`./package-${new Date().getTime()}.json`,{
+export const PackageJsonValues = new JSONFileManager(`./temp/package-${new Date().getTime()}.json`,{
     defaultJson: DefaultPackageJson
 });
 export const Tsconfig = {
@@ -191,7 +191,7 @@ export const Tsconfig = {
         "target": "esnext"
     }
 };
-export const TsconfigJsonValue = new JSONFileManager(`./tsconfig-${new Date().getTime()}.json`,{
+export const TsconfigJsonValue = new JSONFileManager(`./temp/tsconfig-${new Date().getTime()}.json`,{
     defaultJson: Tsconfig
 });
 export const TsconfigBase  = {
@@ -218,7 +218,7 @@ export const TsconfigBase  = {
     "exclude": ["node_modules", "dist"],
     "include": ["src"]
 }
-export const TsconfigBaseJsonValue = new JSONFileManager(`./tsconfig-base-${new Date().getTime()}.json`,{
+export const TsconfigBaseJsonValue = new JSONFileManager(`./temp/tsconfig-base-${new Date().getTime()}.json`,{
     defaultJson: TsconfigBase
 });
 export const TsconfigCjs = {
@@ -229,6 +229,6 @@ export const TsconfigCjs = {
         "target": "es2015"
     }
 };
-export const TsconfigCjsJsonValue = new JSONFileManager(`./tsconfig-cjs-${new Date().getTime()}.json`,{
+export const TsconfigCjsJsonValue = new JSONFileManager(`./temp/tsconfig-cjs-${new Date().getTime()}.json`,{
     defaultJson: TsconfigCjs
 });

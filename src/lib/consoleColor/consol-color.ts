@@ -45,7 +45,7 @@ const Console = {
         });
     },
     keyAndValue: (...args: string[]) => {
-        console.log(fgCyan + args[0]+': '+fgMagenta+args[1] + reset);
+        console.log(fgCyan + args[0]+`${args[2] ?? ': '}`+fgMagenta+args[1] + reset);
     },
     key: (...args: string[]) => {
         args.forEach((message) => {
@@ -57,6 +57,11 @@ const Console = {
             console.log(fgMagenta + message + reset);
         });
     },
+    caption: (...args: string[]) => {
+        args.forEach((message) => {
+            console.log(fgGreen + message + reset);
+        });
+    }
 
 }
 export default Console;

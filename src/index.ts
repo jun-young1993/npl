@@ -3,10 +3,21 @@ import { Options } from "./index.type";
 import Create from "./command/create";
 import Config from "./command/config";
 import {PackageJsonValues, TsconfigBaseJsonValue, TsconfigCjsJsonValue, TsconfigJsonValue} from "./app.config";
-
+import Help from "./command/help";
+import Console from "./lib/consoleColor/consol-color";
+import ProjectVersion from "./command/common/projectVersion";
 
 (async () => {
     const options: {[key: string]:Options} = {
+        "version": {
+            type: 'boolean',
+            short: 'v',
+            default: false
+        },
+        "help": {
+            type: 'boolean',
+            default: false
+        },
         "config" : {
             type: 'boolean',
             default: false
@@ -22,10 +33,14 @@ import {PackageJsonValues, TsconfigBaseJsonValue, TsconfigCjsJsonValue, Tsconfig
 
     const {values} = parseArgs({options});
 
+    if(values.help){
+        await Help();
+    }
+    if(values.version){
+        Console.caption("   "+ProjectVersion());
+    }
     if(values.config){
-        console.log("=>(index.ts:25) values.config,values.set", values.config,values.set);
         await Config(values.set as string | undefined);
-
     }
 
     if(values.create){
