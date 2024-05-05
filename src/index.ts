@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { parseArgs } from "util";
 import { Options } from "./index.type";
 import Create from "./command/create";
