@@ -18,6 +18,7 @@
     "nf": "./dist/cjs/index.js"
   },
   "scripts": {
+    "nf": "npm run build && node dist/cjs/index.js",
     "build": "rm -fr dist/* && tsc -p tsconfig.json && tsc -p tsconfig-cjs.json",
     "start": "node .index.js"
   },

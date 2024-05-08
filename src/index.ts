@@ -7,12 +7,17 @@ import {PackageJsonValues, TsconfigBaseJsonValue, TsconfigCjsJsonValue, Tsconfig
 import Help from "./command/help";
 import Console from "./lib/consoleColor/consol-color";
 import ProjectVersion from "./command/common/projectVersion";
+import CreateReact from "./command/create-react";
 
 (async () => {
     const options: {[key: string]:Options} = {
         "version": {
             type: 'boolean',
             short: 'v',
+            default: false
+        },
+        "react": {
+            type: 'boolean',
             default: false
         },
         "help": {
@@ -45,7 +50,12 @@ import ProjectVersion from "./command/common/projectVersion";
     }
 
     if(values.create){
-        await Create();
+        if(values.react){
+            await CreateReact();
+        }else{
+            await Create();
+        }
+        
     }
 
 

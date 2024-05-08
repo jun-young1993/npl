@@ -44,6 +44,115 @@ export const DefaultPackageJson = {
         "typescript": "^5.4.5"
     }
 }
+export const DefaultReactPackageJson = {
+    "name": "juny-react-style",
+    "version": "1.1.7",
+    "private": false,
+    "dependencies": {
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0",
+      "react-scripts": "5.0.1",
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "jest test --config jest.config.ts",
+      "eject": "react-scripts eject",
+      "rollup": "rollup -c --bundleConfigAsCjs",
+      "rollup:watch": "rollup -cw --bundleConfigAsCjs",
+      "storybook": "storybook dev -p 6006",
+      "build-storybook": "storybook build",
+      "doc": "typedoc --plugin typedoc-plugin-markdown --out docs ./src/component"
+    },
+    "eslintConfig": {
+      "extends": [
+        "react-app",
+        "react-app/jest",
+        "plugin:storybook/recommended"
+      ]
+    },
+    "browserslist": {
+      "production": [
+        ">0.2%",
+        "not dead",
+        "not op_mini all"
+      ],
+      "development": [
+        "last 1 chrome version",
+        "last 1 firefox version",
+        "last 1 safari version"
+      ]
+    },
+    "type": "module",
+    "description": "",
+    "main": "dist/cjs/index.js",
+    "module": "dist/mjs/index.js",
+    "types": "dist/mjs/index.d.ts",
+    "exports": {
+      ".": {
+        "import": "./dist/mjs/index.js",
+        "require": "./dist/cjs/index.js"
+      }
+    },
+    "devDependencies": {
+      "@testing-library/react": "^13.4.0",
+      "@testing-library/user-event": "^13.5.0",
+      "@types/node": "^16.18.96",
+      "@types/react-dom": "^18.2.25",
+      "@chromatic-com/storybook": "^1.3.3",
+      "@rollup/plugin-commonjs": "^25.0.7",
+      "@rollup/plugin-node-resolve": "^15.2.3",
+      "@rollup/plugin-terser": "^0.4.4",
+      "@rollup/plugin-typescript": "^11.1.6",
+      "@storybook/addon-essentials": "^8.0.8",
+      "@storybook/addon-interactions": "^8.0.8",
+      "@storybook/addon-links": "^8.0.8",
+      "@storybook/addon-onboarding": "^8.0.8",
+      "@storybook/blocks": "^8.0.8",
+      "@storybook/preset-create-react-app": "^8.0.8",
+      "@storybook/react": "^8.0.8",
+      "@storybook/react-webpack5": "^8.0.8",
+      "@storybook/test": "^8.0.8",
+      "@testing-library/jest-dom": "^6.4.2",
+      "@types/react": "^18.2.79",
+      "@types/styled-components": "^5.1.34",
+      "eslint-plugin-storybook": "^0.8.0",
+      "jest": "^29.7.0",
+      "postcss": "^8.4.38",
+      "prop-types": "^15.8.1",
+      "rollup": "^4.16.0",
+      "rollup-plugin-dts": "^6.1.0",
+      "rollup-plugin-peer-deps-external": "^2.2.4",
+      "rollup-plugin-postcss": "^4.0.2",
+      "storybook": "^8.0.8",
+      "ts-node": "^10.9.2",
+      "typedoc": "^0.25.13",
+      "typedoc-plugin-markdown": "^3.17.1",
+      "typescript": "^5.0.2",
+      "webpack": "^5.91.0"
+    },
+    "overrides": {
+      "typescript": "^5.0.2"
+    },
+    "repository": {
+      "type": "",
+      "url": ""
+    },
+    "keywords": [
+      "react",
+      "style"
+    ],
+    "author": "jun-young1993",
+    "license": "MIT",
+    "bugs": {
+      "url": ""
+    },
+    "homepage": "",
+    "files": [
+      "dist"
+    ]
+  }
+  
 export const DefaultNpmIgnore = `
 **/*
 !/dist/**
@@ -183,6 +292,9 @@ dist
 export const PackageJsonValues = new JSONFileManager(`./temp/package-${new Date().getTime()}.json`,{
     defaultJson: DefaultPackageJson
 });
+export const PackageReactJsonValues = new JSONFileManager(`./temp/package-react-${new Date().getTime()}.json`,{
+    defaultJson: DefaultReactPackageJson
+})
 export const Tsconfig = {
     "extends": "./tsconfig-base.json",
     "compilerOptions": {
@@ -232,3 +344,4 @@ export const TsconfigCjs = {
 export const TsconfigCjsJsonValue = new JSONFileManager(`./temp/tsconfig-cjs-${new Date().getTime()}.json`,{
     defaultJson: TsconfigCjs
 });
+
