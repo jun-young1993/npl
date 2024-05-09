@@ -97,13 +97,13 @@ const CreateReact = async () => {
 	const projectBaseComponentFile = `${projectBaseComponentFolderPath}/Base.tsx`;
 	
 	writeFileSync(projectBaseComponentFile,`
-	import React from "react";
-
-	function Base()  {
-		return (<div>hi</div>);
-	}
+		import React from "react";
 	
-	export default Base;
+		function Base()  {
+			return (<div>hi</div>);
+		}
+		
+		export default Base;
 	`,)
 	const projectBaseComponentIndex = `${projectBaseComponentFolderPath}/index.ts`;
 	writeFileSync(projectBaseComponentIndex,`
