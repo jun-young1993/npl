@@ -4,7 +4,7 @@ import * as os from "os";
 export const APP_NAME = 'npm-fuse';
 export const MODULE_FOLDER_NAME = 'npm-fuse-modules';
 
-export const JsonConfig = new JSONFileManager("./config.json",{
+export const JsonConfig = new JSONFileManager("./npm-fuse-config.json",{
     defaultJson: {
         "path": `${os.homedir()}/app/source`
     }
@@ -151,8 +151,51 @@ export const DefaultReactPackageJson = {
     "files": [
       "dist"
     ]
-  }
-  
+}
+export const DefaultRollUpConfigJs = `
+import resolve from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
+import typescript from "@rollup/plugin-typescript";
+import dts from "rollup-plugin-dts";
+import terser from "@rollup/plugin-terser";
+import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import postcss from "postcss";
+
+const packageJson = require("./package.json");
+
+export default [
+    {
+        input: "src/index.ts",
+        output: [
+            {
+                file: packageJson.main,
+                format: "cjs",
+                sourcemap: true,
+            },
+            {
+                file: packageJson.module,
+                format: "es",
+                sourcemap: true,
+            },
+        ],
+        plugins: [
+            peerDepsExternal(),
+            resolve(),
+            commonjs(),
+            typescript({ tsconfig: "./tsconfig.json" }),
+            terser(),
+            postcss()
+        ],
+        external: ["react", "react-dom"],
+    },
+    {
+        input: "src/index.ts",
+        output: [{ file: "dist/mjs/types.d.ts", format: "es" }],
+        plugins: [dts.default()],
+        external: [/\.css$/]
+    },
+];
+`;
 export const DefaultNpmIgnore = `
 **/*
 !/dist/**
@@ -324,7 +367,8 @@ export const TsconfigBase  = {
         "rootDir": "src",
         "skipLibCheck": true,
         "strict": true,
-        "traceResolution": false
+        "traceResolution": false,
+        "jsx": "react-jsx"
     },
     "compileOnSave": false,
     "exclude": ["node_modules", "dist"],

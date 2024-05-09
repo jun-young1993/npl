@@ -1,5 +1,6 @@
 import { questionSync } from "../lib/cli/readlineInterface";
 import { DefaultNpmIgnore,
+	DefaultRollUpConfigJs,
 	JsonConfig,
 	MODULE_FOLDER_NAME,
 	PackageJsonValues,
@@ -7,9 +8,10 @@ import { DefaultNpmIgnore,
 	TsconfigBaseJsonValue, TsconfigCjsJsonValue,
 	TsconfigJsonValue } from "../app.config";
 import Console from "../lib/consoleColor/consol-color";
-import {copyFileSync, existsSync, mkdirSync, rmSync, symlinkSync, writeFileSync} from "fs";
-import {exec, execSync} from "child_process";
+import {copyFileSync, existsSync, mkdirSync, rmSync, symlinkSync, writeFile, writeFileSync} from "fs";
+import {exec, execSync, spawn} from "child_process";
 import * as os from "os";
+import path from "path";
 
 const CreateReact = async () => {
 	Console.info("++++++++++++++++++++++++++");
@@ -49,7 +51,7 @@ const CreateReact = async () => {
 
 	symlinkSync(projectFullPath,moduleSymLinkProjectPath,"dir");
 	Console.info(`[Create Project Symlink] ${moduleSymLinkProjectPath}`);
-
+	
 	const projectPackageJsonPath = `${moduleSymLinkProjectPath}/package.json`;
 	copyFileSync(PackageReactJsonValues.getPath(),projectPackageJsonPath);
 	PackageReactJsonValues.deleteFile();
@@ -73,7 +75,7 @@ const CreateReact = async () => {
 	const projectNpmIgnore = `${moduleSymLinkProjectPath}/.npmignore`;
 	writeFileSync(projectNpmIgnore,DefaultNpmIgnore);
 	Console.info(`[Create Project npmignore] ${projectNpmIgnore}`);
-
+	writeFileSync(`${moduleSymLinkProjectPath}/rollup.config.js`,DefaultRollUpConfigJs);
 	const projectSrcFolder = `${moduleSymLinkProjectPath}/src`;
 	mkdirSync(projectSrcFolder,{
 		recursive: true
@@ -84,7 +86,7 @@ const CreateReact = async () => {
 	writeFileSync(projectBaseIndex,`
 	export * from './component';
 	`,)
-
+	
 	const projectComponentFolderPath = `${projectSrcFolder}/component`;
 
 
@@ -92,12 +94,16 @@ const CreateReact = async () => {
 	mkdirSync(projectBaseComponentFolderPath,{
 		recursive: true
 	});
-	const projectBaseComponentFile = `${projectBaseComponentFolderPath}/Base.ts`;
+	const projectBaseComponentFile = `${projectBaseComponentFolderPath}/Base.tsx`;
+	
 	writeFileSync(projectBaseComponentFile,`
-		const Base = () => {
-			return <div>base</div>;
-		}
-		export default Base;
+	import React from "react";
+
+	function Base()  {
+		return (<div>hi</div>);
+	}
+	
+	export default Base;
 	`,)
 	const projectBaseComponentIndex = `${projectBaseComponentFolderPath}/index.ts`;
 	writeFileSync(projectBaseComponentIndex,`
@@ -111,14 +117,15 @@ const CreateReact = async () => {
 	Console.info(`[Create Project src index] ${projectBaseIndex}`);
 
 	Console.info(`[npm install && npm run build && npm link]...`);
+
 	const npmInstallResult = execSync("npm install",{
 		cwd: moduleSymLinkProjectPath
 	})
 	Console.info(`[Result Npm Install]...`,npmInstallResult.toString());
-	const npmRunBuildResult = execSync("npm run build",{
+	const npmRunBuildResult = execSync("npm run rollup",{
 		cwd: moduleSymLinkProjectPath
 	})
-	Console.info(`[Result Build]...`,npmRunBuildResult.toString());
+	Console.info(`[Result rollup]...`,npmRunBuildResult.toString());
 	const npmLinkResult = execSync("npm link",{
 		cwd: moduleSymLinkProjectPath
 	})

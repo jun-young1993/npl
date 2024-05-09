@@ -1,3 +1,6 @@
+## document
+# [👉 move modules document 👈](https://juny.blog/blog/docs/npm-fuse.md)
+
 # npl
 > npm publish manager
 
@@ -25,10 +28,4 @@ $ nf --help
                                  $ nf --config --set path=/myProjects/source
 
 ```
-
-## --create
-> - Creating a TypeScript development environment
->  - It will be generated at the config.path directory.
-> - Generating symbolic links for the project symbols created in the current project
->  - By using npm link and creating symbolic links for the generated project, you can directly import and use the source.
 
