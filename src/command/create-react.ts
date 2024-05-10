@@ -119,15 +119,15 @@ const CreateReact = async () => {
 	Console.info(`[npm install && npm run build && npm link]...`);
 
 	const npmInstallResult = execSync("npm install",{
-		cwd: moduleSymLinkProjectPath
+		cwd: projectFullPath
 	})
 	Console.info(`[Result Npm Install]...`,npmInstallResult.toString());
 	const npmRunBuildResult = execSync("npm run rollup",{
-		cwd: moduleSymLinkProjectPath
+		cwd: projectFullPath
 	})
 	Console.info(`[Result rollup]...`,npmRunBuildResult.toString());
 	const npmLinkResult = execSync("npm link",{
-		cwd: moduleSymLinkProjectPath
+		cwd: projectFullPath
 	})
 	Console.info(`[Result Link]...`,npmLinkResult.toString());
 }
