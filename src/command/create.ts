@@ -11,6 +11,7 @@ import {
 } from "../app.config";
 import * as os from "os";
 import {exec, execSync} from "child_process";
+import { infoFolderPath, infoFolderProjectPath } from "fuse.info";
 
 const Create = async () => {
 
@@ -25,7 +26,7 @@ const Create = async () => {
 	const projectVersion = await questionSync(`project version(${PackageJsonValues.read("version")}): `,PackageJsonValues.read("version"));
 	PackageJsonValues.update("version",projectVersion)
 
-	const projectFullPath = `${JsonConfig.read('path',os.homedir())}/${projectName}`;
+	const projectFullPath = `${infoFolderProjectPath}/${projectName}`;
 
 	const existsProjectFolder = existsSync(projectFullPath);
 	if(existsProjectFolder){

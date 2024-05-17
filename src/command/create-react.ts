@@ -12,6 +12,7 @@ import {copyFileSync, existsSync, mkdirSync, rmSync, symlinkSync, writeFile, wri
 import {exec, execSync, spawn} from "child_process";
 import * as os from "os";
 import path from "path";
+import { infoFolderPath, infoFolderProjectPath } from "fuse.info";
 
 const CreateReact = async () => {
 	Console.info("++++++++++++++++++++++++++");
@@ -25,7 +26,7 @@ const CreateReact = async () => {
 	const projectVersion = await questionSync(`project version(${PackageJsonValues.read("version")}): `,PackageJsonValues.read("version"));
 	PackageJsonValues.update("version",projectVersion)
 
-	const projectFullPath = `${JsonConfig.read('path',os.homedir())}/${projectName}`;
+	const projectFullPath = `${infoFolderProjectPath}/${projectName}`;
 
 	const existsProjectFolder = existsSync(projectFullPath);
 	if(existsProjectFolder){

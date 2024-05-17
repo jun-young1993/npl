@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { parseArgs } from "util";
+import * as util from "util";
 import { Options } from "./index.type";
 import Create from "./command/create";
 import Config from "./command/config";
@@ -8,8 +8,15 @@ import Help from "./command/help";
 import Console from "./lib/consoleColor/consol-color";
 import ProjectVersion from "./command/common/projectVersion";
 import CreateReact from "./command/create-react";
+import { createInfoFolder } from "fuse.info";
+import List from "./command/list";
 
+function before(){
+    createInfoFolder();
+}
 (async () => {
+    before();
+
     const options: {[key: string]:Options} = {
         "version": {
             type: 'boolean',
@@ -34,10 +41,14 @@ import CreateReact from "./command/create-react";
         "create": {
             type: 'boolean',
             default: false
+        },
+        "list": {
+            type: 'boolean',
+            default: false
         }
     }
 
-    const {values} = parseArgs({options});
+    const {values} = util.parseArgs({options});
 
     if(values.help){
         await Help();
@@ -55,10 +66,13 @@ import CreateReact from "./command/create-react";
         }else{
             await Create();
         }
-        
     }
 
+    if(values.list){
+        await List();
+    }
 
+    
     PackageJsonValues.deleteFile();
     TsconfigJsonValue.deleteFile();
     TsconfigBaseJsonValue.deleteFile();

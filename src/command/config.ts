@@ -1,3 +1,4 @@
+import { infoFolderPath } from "fuse.info";
 import {JsonConfig} from "../app.config";
 import Console from "../lib/consoleColor/consol-color";
 
@@ -8,6 +9,7 @@ const getConfigList = () => {
     for(const key in jsonData){
         console.log(`\x1b[36m${key}: \x1b[35m${jsonData[key]}\x1b[0m`);
     }
+    console.log(`\x1b[36mfuse folder path: \x1b[35m${infoFolderPath}\x1b[0m`)
 }
 const Config = (
     isSet?: string | undefined
