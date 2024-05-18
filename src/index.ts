@@ -11,6 +11,7 @@ import CreateReact from "./command/create-react";
 import { createInfoFolder } from "fuse.info";
 import List from "./command/list";
 import Delete from "./command/delete";
+import {rmSync} from "fs";
 
 function before(){
     createInfoFolder();
@@ -86,7 +87,7 @@ function before(){
         await List();
     }
 
-    
+
     PackageJsonValues.deleteFile();
     TsconfigJsonValue.deleteFile();
     TsconfigBaseJsonValue.deleteFile();

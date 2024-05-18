@@ -14,7 +14,7 @@ npm install -global npm-fuse
 $ nf --help
 
 [Usage]
-   npm-fuse 1.0.0
+   npm-fuse 1.0.5
 
    $ npm-fuse <option>
    $ nf <option>
@@ -26,6 +26,13 @@ $ nf --help
                                  $ nf --config
    --config --set <key=value>    update npm-fuse config list
                                  $ nf --config --set path=/myProjects/source
+   --list                        created project list
+                                 $ nf --list
+   --delete --name <projectName> delete project
+                                  - unlink
+                                  - delete project folder
+                                 $ nf --delete --name testProject
+
 
 ```
 
