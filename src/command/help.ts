@@ -18,6 +18,13 @@ const Help = () => {
     Console.info("                                 $ nf --config");
     Console.keyAndValue("   --config --set <key=value>","update npm-fuse config list","    ");
     Console.info("                                 $ nf --config --set path=/myProjects/source");
+    Console.keyAndValue("   --list","created project list","                        ");
+    Console.info("                                 $ nf --list");
+    Console.keyAndValue("   --delete --name <projectName>","delete project"," ");
+    Console.info("                                  - unlink");
+    Console.info("                                  - delete project folder");
+    Console.info("                                 $ nf --delete --name testProject");
+
 }
 
 export default Help;

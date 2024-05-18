@@ -10,6 +10,7 @@ import ProjectVersion from "./command/common/projectVersion";
 import CreateReact from "./command/create-react";
 import { createInfoFolder } from "fuse.info";
 import List from "./command/list";
+import Delete from "./command/delete";
 
 function before(){
     createInfoFolder();
@@ -45,6 +46,13 @@ function before(){
         "list": {
             type: 'boolean',
             default: false
+        },
+        "delete": {
+            type: 'boolean',
+            default: false
+        },
+        "name": {
+            type: "string",
         }
     }
 
@@ -65,6 +73,12 @@ function before(){
             await CreateReact();
         }else{
             await Create();
+        }
+    }
+
+    if(values.delete){
+        if(typeof values.name === 'string'){
+            await Delete(values.name);
         }
     }
 

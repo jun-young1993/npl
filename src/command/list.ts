@@ -3,7 +3,7 @@ import Console from "../lib/consoleColor/consol-color";
 import { readFileSync, readdirSync } from "fs";
 
 const List = async () => {
-	Console.info('[Config List]');
+	Console.info('[Package List]');
 	const projectList = readdirSync(infoFolderProjectPath);
 	for(let listIndex = 0; listIndex<projectList.length; listIndex++){
 		const packageName = projectList[0];

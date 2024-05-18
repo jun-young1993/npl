@@ -1,6 +1,6 @@
 import { questionSync } from "../lib/cli/readlineInterface";
 import Console from "../lib/consoleColor/consol-color";
-import {copyFileSync, existsSync, mkdirSync, rmSync, symlinkSync, writeFileSync} from "fs";
+import {copyFileSync, existsSync, mkdirSync, rmSync, symlinkSync, unlinkSync, writeFileSync} from "fs";
 import {
 	DefaultNpmIgnore,
 	JsonConfig,
@@ -49,6 +49,10 @@ const Create = async () => {
 		recursive: true
 	});
 	const moduleSymLinkProjectPath = `${moduleSymLinkFolderPath}/${projectName}`;
+
+	if(existsSync(moduleSymLinkProjectPath)){
+		unlinkSync(moduleSymLinkProjectPath);
+	}
 
 	symlinkSync(projectFullPath,moduleSymLinkProjectPath,"dir");
 	Console.info(`[Create Project Symlink] ${moduleSymLinkProjectPath}`);

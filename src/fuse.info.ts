@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync } from 'fs';
 import * as os from 'os';
 const homedir = os.tmpdir();
+export const localPackageFolder = "npm-fuse-modules";
 export const infoFolderPath = `${homedir}/npm-fuse`;
 export const infoFolderProjectPath = `${infoFolderPath}/projects`
 export const PackageJsonFileName = 'package.json';

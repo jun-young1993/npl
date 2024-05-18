@@ -131,4 +131,4 @@ dist
 
 .idea
 
-./npm-fuse-modules
+./npm-fuse-modules/*
