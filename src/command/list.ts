@@ -1,4 +1,4 @@
-import { infoFolderProjectPath } from "fuse.info";
+import { infoFolderProjectPath } from "../fuse.info";
 import Console from "../lib/consoleColor/consol-color";
 import { readFileSync, readdirSync } from "fs";
 

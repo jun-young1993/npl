@@ -12,7 +12,7 @@ import {copyFileSync, existsSync, mkdirSync, rmSync, symlinkSync, writeFile, wri
 import {exec, execSync, spawn} from "child_process";
 import * as os from "os";
 import path from "path";
-import { infoFolderPath, infoFolderProjectPath } from "fuse.info";
+import { infoFolderPath, infoFolderProjectPath } from "../fuse.info";
 
 const CreateReact = async () => {
 	Console.info("++++++++++++++++++++++++++");

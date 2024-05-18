@@ -1,4 +1,4 @@
-import { infoFolderPath } from "fuse.info";
+import { infoFolderPath } from "../fuse.info";
 import {JsonConfig} from "../app.config";
 import Console from "../lib/consoleColor/consol-color";
 

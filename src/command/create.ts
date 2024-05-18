@@ -11,7 +11,7 @@ import {
 } from "../app.config";
 import * as os from "os";
 import {exec, execSync} from "child_process";
-import { infoFolderPath, infoFolderProjectPath } from "fuse.info";
+import { infoFolderPath, infoFolderProjectPath } from "../fuse.info";
 
 const Create = async () => {
 

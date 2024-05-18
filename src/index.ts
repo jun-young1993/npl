@@ -8,7 +8,7 @@ import Help from "./command/help";
 import Console from "./lib/consoleColor/consol-color";
 import ProjectVersion from "./command/common/projectVersion";
 import CreateReact from "./command/create-react";
-import { createInfoFolder } from "fuse.info";
+import { createInfoFolder } from "./fuse.info";
 import List from "./command/list";
 import Delete from "./command/delete";
 import {rmSync} from "fs";
