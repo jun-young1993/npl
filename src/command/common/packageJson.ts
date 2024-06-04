@@ -1,12 +1,25 @@
-import {existsSync, readFileSync} from "fs";
-const packageJsonPath = `${process.env.PWD}/package.json`;
+import { existsSync, readFileSync } from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
 
-const PackageJson = () => {
-    if(existsSync(packageJsonPath)){
-        const data = readFileSync(packageJsonPath,'utf8');
-        return JSON.parse(data);
-    }
-    return {};
+interface PackageJsonInterface {
+    [key: string]: any;
 }
-export default PackageJson();
 
+const getPackageJson = <T extends PackageJsonInterface>(key?: string) => {
+    try{
+        const _dirname = dirname(fileURLToPath(import.meta.url));
+        const packagePath = join(_dirname,'../..', 'package.json');
+        if(existsSync(packagePath)){
+            const packageJson = JSON.parse(readFileSync(packagePath, 'utf8')) as T;
+            if(key){
+                return packageJson[key];
+            }
+            return packageJson;
+        }
+    }catch(error){
+        return {} as T;
+    }
+};
+
+export default getPackageJson;

@@ -1,0 +1,100 @@
+#!/usr/bin/env node
+import * as util from "util";
+import { Options } from "./index.type";
+import Create from "./command/create";
+import Config from "./command/config";
+import {PackageJsonValues, TsconfigBaseJsonValue, TsconfigCjsJsonValue, TsconfigJsonValue} from "./app.config";
+import Help from "./command/help";
+import Console from "./lib/consoleColor/consol-color";
+import ProjectVersion from "./command/common/projectVersion";
+import CreateReact from "./command/create-react";
+import { createInfoFolder } from "./fuse.info";
+import List from "./command/list";
+import Delete from "./command/delete";
+import getPackageJson from "./command/common/packageJson";
+
+function before(){
+    createInfoFolder();
+}
+(async () => {
+    before();
+
+    const options: {[key: string]:Options} = {
+        "version": {
+            type: 'boolean',
+            short: 'v',
+            default: false
+        },
+        "react": {
+            type: 'boolean',
+            default: false
+        },
+        "help": {
+            type: 'boolean',
+            default: false
+        },
+        "config" : {
+            type: 'boolean',
+            default: false
+        },
+        "set" : {
+            type: "string",
+        },
+        "create": {
+            type: 'boolean',
+            default: false
+        },
+        "list": {
+            type: 'boolean',
+            default: false
+        },
+        "delete": {
+            type: 'boolean',
+            default: false
+        },
+        "name": {
+            type: "string",
+        }
+    }
+
+    const {values} = util.parseArgs({options});
+
+    if(values.help){
+        await Help();
+    }
+    if(values.version){
+        Console.caption("   "+getPackageJson('version'));
+    }
+    if(values.config){
+        await Config(values.set as string | undefined);
+    }
+
+    if(values.create){
+        if(values.react){
+            await CreateReact();
+        }else{
+            await Create();
+        }
+    }
+
+    if(values.delete){
+        if(typeof values.name === 'string'){
+            await Delete(values.name);
+        }
+    }
+
+    if(values.list){
+        await List();
+    }
+
+
+    PackageJsonValues.deleteFile();
+    TsconfigJsonValue.deleteFile();
+    TsconfigBaseJsonValue.deleteFile();
+    TsconfigCjsJsonValue.deleteFile();
+    process.exit(0);
+})();
+
+
+
+

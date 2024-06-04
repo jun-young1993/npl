@@ -8,3 +8,13 @@ export interface Options  {
     multiple?: boolean, // optional, default `false`
     default?: boolean | string
   };
+
+  export interface CreateOptions {
+    directory: string;
+    typescript?: boolean;
+  }
+
+  export interface ConfigOptions {
+    key?: string
+    value?: string
+  }

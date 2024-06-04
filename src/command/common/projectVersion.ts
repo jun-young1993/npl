@@ -1,11 +1,12 @@
+import getPackageJson from "./packageJson";
 import PackageJson from "./packageJson";
 
 const ProjectVersion = (): string => {
-    let version = PackageJson.version;
+    let version = getPackageJson('version');
     if(!version){
         version = "0.0.0";
     }
-    let name = PackageJson.name;
+    let name = getPackageJson('version');
     if(!name)  {
         name = 'no name';
     }

@@ -1,4 +1,5 @@
 {
-  "path": "/Users/junyoungkim/Desktop/junyoung/app/source",
-  "test": "1"
+  "test": "test",
+  "=user.name": "=jun",
+  "user.name": "jun"
 }
