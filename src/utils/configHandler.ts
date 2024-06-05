@@ -2,18 +2,20 @@ import fs from 'fs-extra';
 import path from 'path';
 import os from 'os';
 const configFilePath = path.join(__dirname, '../../config.json');
+interface ConfigValueInterface {
+  path: string
+}
+interface Config extends ConfigValueInterface{
+  [key: string]: string;
+}
 const defaultConfig: Config = {
 	path: process.cwd()
 };
-interface Config {
-  [key: string]: string;
-}
+
 
 export function getConfig(): Config {
-  if (fs.existsSync(configFilePath)) {
-    return fs.readJsonSync(configFilePath);
-  }
-  return {};
+  const config: Config = fs.existsSync(configFilePath) ? fs.readJsonSync(configFilePath) : {};
+  return { ...defaultConfig, ...config };
 }
 
 export function setConfig(key: string, value: string): void {
@@ -25,7 +27,7 @@ export function setConfig(key: string, value: string): void {
 export function getConfigValue(key: string, defaultValue?: string): string | undefined {
   const config = getConfig();
   if(defaultValue !== null && config[key] === undefined){
-	return defaultValue;
+	  return defaultValue;
   }
   if(defaultConfig[key] !== undefined && config[key] === undefined){
 	return defaultConfig[key];
